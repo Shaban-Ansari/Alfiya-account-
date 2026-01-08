@@ -18,7 +18,6 @@ body{
   overflow-x:hidden;
 }
 .font-amiri{font-family:'Amiri',serif;}
-.font-playfair{font-family:'Playfair Display',serif;}
 .hidden{display:none}
 
 /* Petals */
@@ -36,7 +35,7 @@ body{
   to{transform:translateY(110vh)}
 }
 
-/* Game food */
+/* Floating game food */
 .food{
   position:absolute;
   font-size:2.5rem;
@@ -49,16 +48,43 @@ body{
   to{transform:translateY(-120%);opacity:0}
 }
 
-/* Hijabi Girl */
+/* ===== HIJABI NINJA ===== */
+.hijabi-wrap{
+  position:relative;
+  width:200px;
+  margin:auto;
+  animation:ninjaSlide 3.5s ease-in-out infinite alternate;
+}
+@keyframes ninjaSlide{
+  0%{transform:translateX(-25px) scale(.95);opacity:.6}
+  50%{transform:translateX(10px) scale(1);opacity:1}
+  100%{transform:translateX(-5px) scale(1.02);opacity:1}
+}
+
+/* Ground Shadow */
+.ground-shadow{
+  position:absolute;
+  bottom:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:120px;
+  height:18px;
+  background:rgba(0,0,0,.25);
+  filter:blur(12px);
+  border-radius:50%;
+  animation:shadowPulse 3.5s ease-in-out infinite alternate;
+}
+@keyframes shadowPulse{
+  from{transform:translateX(-50%) scale(.8);opacity:.3}
+  to{transform:translateX(-50%) scale(1);opacity:.5}
+}
+
+/* Hijabi body */
 .hijabi{
   position:relative;
   width:140px;
   height:220px;
-  animation:float 4s ease-in-out infinite;
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
+  margin:auto;
 }
 .head{
   position:absolute;
@@ -108,6 +134,143 @@ body{
 .hand{
   position:absolute;
   right:-20px;
+  top:120px;
+  width:30px;
+  height:60px;
+  background:#f5c1cc;
+  border-radius:20px;
+  transform-origin:top;
+  animation:wave 2.5s ease-in-out infinite;
+}
+@keyframes wave{
+  0%,100%{transform:rotate(10deg)}
+  50%{transform:rotate(-15deg)}
+}
+</style>
+</head>
+
+<body>
+
+<div id="petals"></div>
+
+<!-- Gift -->
+<section id="gift" class="min-h-screen flex flex-col justify-center items-center gap-6 text-center">
+  <div onclick="reveal()" class="w-36 h-36 bg-pink-300 rounded-3xl flex items-center justify-center shadow-xl cursor-pointer hover:scale-110 transition">
+    <span class="text-6xl">🎁</span>
+  </div>
+  <button onclick="reveal()" class="px-8 py-3 bg-pink-400 text-white rounded-full text-lg shadow-lg">
+    Alfiya, Tap for Surprise 💗
+  </button>
+</section>
+
+<!-- Content -->
+<section id="content" class="hidden max-w-4xl mx-auto px-6 py-20 space-y-16">
+
+<header class="text-center">
+  <h1 class="font-amiri text-6xl text-pink-600">
+    Happy Birthday<br><span class="italic">Alfiya</span> 🌸
+  </h1>
+</header>
+
+<main class="bg-white/60 backdrop-blur rounded-3xl p-10 shadow-xl text-center space-y-6">
+  <p class="italic">
+    May Allah ﷻ bless your rizq, balance your life like your accounts,
+    and fill your days with cake 🎂 & biryani 🍛
+  </p>
+</main>
+
+<!-- Hijabi Ninja -->
+<section class="flex justify-center py-10 relative">
+  <div class="hijabi-wrap">
+    <div class="hijabi">
+      <div class="head"></div>
+      <div class="face">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="smile"></div>
+      </div>
+      <div class="hand"></div>
+    </div>
+    <div class="ground-shadow"></div>
+  </div>
+</section>
+
+<!-- Game -->
+<section class="text-center space-y-6">
+  <h2 class="font-amiri text-4xl text-pink-600">Catch the Treats 🍰🍛</h2>
+  <div id="gameArea" class="relative mx-auto w-full max-w-md h-64 bg-white/40 rounded-3xl overflow-hidden"></div>
+  <div class="max-w-md mx-auto">
+    <div class="h-3 bg-pink-200 rounded-full">
+      <div id="progressBar" class="h-full bg-pink-400 w-0"></div>
+    </div>
+    <p class="mt-2">Score: <span id="score">0</span>/5</p>
+  </div>
+</section>
+
+<footer class="text-center text-sm text-pink-500 opacity-70">
+  Softly Celebrating You • 2026 / 1447 AH
+</footer>
+
+</section>
+
+<!-- Popup -->
+<div id="popup" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center">
+  <div class="bg-white rounded-3xl p-8 max-w-sm text-center space-y-4 shadow-2xl">
+    <h3 class="font-amiri text-3xl text-pink-600">For You 💖</h3>
+    <p class="italic text-pink-500">
+      Small in height, big in heart.  
+      Stay sweet, stay blessed 🌸
+    </p>
+    <button onclick="popup.classList.add('hidden')" class="px-6 py-2 bg-pink-400 text-white rounded-full">
+      Ameen ✨
+    </button>
+  </div>
+</div>
+
+<script>
+// petals
+const petalBox=document.getElementById("petals");
+for(let i=0;i<25;i++){
+  let p=document.createElement("div");
+  p.className="petal";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=6+Math.random()*6+"s";
+  petalBox.appendChild(p);
+}
+
+// reveal
+function reveal(){
+  gift.classList.add("hidden");
+  content.classList.remove("hidden");
+}
+
+// game
+let score=0;
+const gameArea=document.getElementById("gameArea");
+const progressBar=document.getElementById("progressBar");
+const scoreSpan=document.getElementById("score");
+
+function spawnFood(){
+  if(score>=5) return;
+  const food=document.createElement("div");
+  food.className="food";
+  food.innerText=Math.random()>0.5?"🍰":"🍛";
+  food.style.left=Math.random()*80+"%";
+  food.onclick=()=>{
+    food.remove();
+    score++;
+    scoreSpan.innerText=score;
+    progressBar.style.width=(score/5)*100+"%";
+    if(score===5) popup.classList.remove("hidden");
+  };
+  gameArea.appendChild(food);
+  setTimeout(()=>food.remove(),6000);
+}
+setInterval(spawnFood,1200);
+</script>
+
+</body>
+</html>  right:-20px;
   top:120px;
   width:30px;
   height:60px;
